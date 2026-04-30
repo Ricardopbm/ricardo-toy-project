@@ -1,0 +1,77 @@
+# USER API ================================================================
+
+@host=localhost:8080
+
+### TODOS OS USUÁRIOS
+GET /api/v1/users HTTP/1.1
+Host: localhost:8080
+Accept: application/json
+
+
+### Get all users
+# @name= getAllUsers
+
+GET /api/v1/users HTTP/1.1
+Host: {{host}}
+Accept: application/json
+
+### Create a new valid User
+# @name = createNewUser
+
+POST /api/v1/users HTTP/1.1
+Host: {{host}}
+Content-Type: application/json
+
+{
+    "email": "batata@potato.com",
+    "password": "1234RT56",
+    "handle": "papas",
+    "name": "Kartofel",
+    "roles": [
+        "ROLE_USER"
+    ],
+    "company": "potato inc"
+}
+
+
+### Try and create an invalid User
+# @name = tryCreateInvalidUser
+
+POST /api/v1/users HTTP/1.1
+Host: {{host}}
+Content-Type: application/json
+
+{
+    "email": "batata@potato.com",
+    "password": "1234",
+    "handle": "papas",
+    "name": "Kartofel",
+    "roles": [
+        "ROLE_USER"
+    ],
+    "company": "potato inc"
+}
+
+### GET FIRST 10 REPORTS
+
+GET /api/v1/vulnerability-reports HTTP/1.1
+Host: {{host}}
+Accept: application/json
+
+
+
+### GET THIRD PAGE
+
+GET /api/v1/vulnerability-reports?page=3&size=10 HTTP/1.1
+Host: {{host}}
+Accept: application/json
+
+### INVALID PAGE (page must be >= 1)
+GET /api/v1/vulnerability-reports?page=0&size=10 HTTP/1.1
+Host: {{host}}
+Accept: application/json
+
+### INVALID SIZE (exceeds configured max-page-size)
+GET /api/v1/vulnerability-reports?page=1&size=1001 HTTP/1.1
+Host: {{host}}
+Accept: application/json

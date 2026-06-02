@@ -1,0 +1,16 @@
+{
+	"service": "app",
+	"dockerComposeFile": ["./docker-compose.yaml","../docker-compose.yaml"],
+	"workspaceFolder": "/workspace",
+	"shutdownAction": "stopCompose",
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"ms-vscode.sublime-keybindings",
+				"vscjava.vscode-java-pack",
+				"vmware.vscode-boot-dev-pack",
+				"humao.rest-client"
+			]
+		}
+	}
+}

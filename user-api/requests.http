@@ -1,0 +1,83 @@
+# USER API ================================================================
+
+@host=localhost:8080
+# AuthController
+### Autenticar e receber um TOKEN
+# @name login
+POST /api/auth/login HTTP/1.1
+Host: localhost:8080
+Content-Type: application/json
+
+{
+    "username": "ricardo",
+    "password": "12345abc"
+}
+
+### Sair
+POST /api/auth/logout HTTP/1.1
+Host: localhost:8080
+Authorization: Bearer {{login.response.body.token}}
+
+### TODOS OS USUÁRIOS
+GET /api/v1/users HTTP/1.1
+Host: localhost:8080
+Accept: application/json
+
+### Get all users --- AUTENTICADO
+# @name= getAllUsers
+
+GET /api/v1/users HTTP/1.1
+Host: {{host}}
+Accept: application/json
+Authorization: Bearer {{login.response.body.token}}
+
+### Create a new valid User
+# @name = createNewUser
+
+POST /api/v1/users HTTP/1.1
+Host: {{host}}
+Content-Type: application/json
+
+{
+    "email": "batata@potato.com",
+    "password": "1234RT56",
+    "handle": "papas",
+    "name": "Kartofel",
+    "roles": [
+        "ROLE_USER"
+    ],
+    "company": "potato inc"
+}
+
+
+### Try and create an invalid User
+# @name = tryCreateInvalidUser
+
+POST /api/v1/users HTTP/1.1
+Host: {{host}}
+Content-Type: application/json
+
+{
+    "email": "batata@potato.com",
+    "password": "1234",
+    "handle": "papas",
+    "name": "Kartofel",
+    "roles": [
+        "ROLE_USER"
+    ],
+    "company": "potato inc"
+}
+
+### GET FIRST 10 REPORTS
+
+GET /api/v1/vulnerability-reports HTTP/1.1
+Host: {{host}}
+Accept: application/json
+
+
+
+### GET THIRD PAGE
+
+GET /api/v1/vulnerability-reports?page=3&size=10 HTTP/1.1
+Host: {{host}}
+Accept: application/json

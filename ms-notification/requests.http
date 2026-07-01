@@ -1,0 +1,13 @@
+@host=localhost:8081
+
+### Envia notificacao por sms
+POST /api/v1/notification HTTP/1.1
+Host: {{host}}
+Content-Type: application/json
+
+{
+  "recipient": "usuario.teste@example.com",
+  "title": "Teste",
+  "body": "Teste de notificacao.",
+  "media": ["sms"]
+}

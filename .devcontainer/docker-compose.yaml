@@ -1,0 +1,25 @@
+services:
+  postgres-server:
+    image: postgres:13
+    environment:
+      POSTGRES_USER: postgres-user
+      POSTGRES_PASSWORD: postgres-password
+      POSTGRES_DB: cobaia
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ..:/workspace:cached
+    working_dir: /workspace
+    command: sleep infinity
+    depends_on:
+      - postgres-server
+    environment:
+      POSTGRES_URL: jdbc:postgresql://postgres-server:5432/cobaia
+
+volumes:
+  postgres_data:

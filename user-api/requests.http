@@ -1,0 +1,73 @@
+@host=localhost:8080
+
+### Lista usuarios
+GET /api/v1/users HTTP/1.1
+Host: localhost:8080
+Accept: application/json
+
+
+### Lista usuarios usando variavel
+GET /api/v1/users HTTP/1.1
+Host: {{host}}
+Accept: application/json
+
+### Cria usuario valido
+POST /api/v1/users HTTP/1.1
+Host: {{host}}
+Content-Type: application/json
+
+{
+    "email": "usuario.teste@example.com",
+    "password": "1234RT56",
+    "handle": "usuario.teste",
+    "name": "Usuario Teste",
+    "roles": [
+        "ROLE_USER"
+    ],
+    "company": "empresa teste"
+}
+
+### Cria outro usuario valido
+POST /api/v1/users HTTP/1.1
+Host: {{host}}
+Content-Type: application/json
+
+{
+    "email": "novo.usuario@example.com",
+    "password": "1234RT56",
+    "handle": "novo.usuario",
+    "name": "Novo Usuario",
+    "roles": [
+        "ROLE_USER"
+    ],
+    "company": "empresa teste"
+}
+
+
+### Invalido: senha fraca
+POST /api/v1/users HTTP/1.1
+Host: {{host}}
+Content-Type: application/json
+
+{
+    "email": "usuario.invalido@example.com",
+    "password": "1234",
+    "handle": "usuario.invalido",
+    "name": "Usuario Invalido",
+    "roles": [
+        "ROLE_USER"
+    ],
+    "company": "empresa teste"
+}
+
+### Lista relatorios
+GET /api/v1/vulnerability-reports HTTP/1.1
+Host: {{host}}
+Accept: application/json
+
+
+
+### Lista terceira pagina de relatorios
+GET /api/v1/vulnerability-reports?page=3&size=10 HTTP/1.1
+Host: {{host}}
+Accept: application/json

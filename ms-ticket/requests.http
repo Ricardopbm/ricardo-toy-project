@@ -1,0 +1,101 @@
+@host=localhost:8082
+
+### Cria ticket valido sem destinatario: destinatario e o proprio criador
+POST /api/v1/tickets HTTP/1.1
+Host: {{host}}
+Content-Type: application/json
+
+{
+  "action": "instalar",
+  "object": "computador",
+  "details": "Instalar o computador para o novo usuario.",
+  "creator": "ana@example.com",
+  "observers": [
+    "infra@example.com",
+    "gestor@example.com"
+  ]
+}
+
+### Cria ticket valido para outra pessoa
+POST /api/v1/tickets HTTP/1.1
+Host: {{host}}
+Content-Type: application/json
+
+{
+  "action": "configurar",
+  "object": "email corporativo",
+  "details": "Configurar a conta de email.",
+  "creator": "solicitante@example.com",
+  "recipient": "novo.usuario@example.com",
+  "observers": []
+}
+
+### Invalido: sem acao
+POST /api/v1/tickets HTTP/1.1
+Host: {{host}}
+Content-Type: application/json
+
+{
+  "object": "computador",
+  "details": "Instalar o computador.",
+  "creator": "ana@example.com"
+}
+
+### Invalido: observador nao e email
+POST /api/v1/tickets HTTP/1.1
+Host: {{host}}
+Content-Type: application/json
+
+{
+  "action": "instalar",
+  "object": "computador",
+  "details": "Instalar o computador.",
+  "creator": "ana@example.com",
+  "observers": [
+    "email-invalido"
+  ]
+}
+
+### Coloca ticket em andamento com responsavel
+PATCH /api/v1/tickets/1/status HTTP/1.1
+Host: {{host}}
+Content-Type: application/json
+
+{
+  "status": "IN_PROGRESS",
+  "assignee": "tecnico@example.com"
+}
+
+### Invalido: em andamento sem responsavel
+PATCH /api/v1/tickets/1/status HTTP/1.1
+Host: {{host}}
+Content-Type: application/json
+
+{
+  "status": "IN_PROGRESS"
+}
+
+### Cancela ticket com motivo
+PATCH /api/v1/tickets/1/status HTTP/1.1
+Host: {{host}}
+Content-Type: application/json
+
+{
+  "status": "CANCELED",
+  "motivo": "Solicitacao duplicada"
+}
+
+### Invalido: motivo sem cancelar
+PATCH /api/v1/tickets/1/status HTTP/1.1
+Host: {{host}}
+Content-Type: application/json
+
+{
+  "status": "RESOLVED",
+  "motivo": "Tentativa invalida"
+}
+
+### Listar tickets
+GET /api/v1/tickets HTTP/1.1
+Host: {{host}}
+Accept: application/json
